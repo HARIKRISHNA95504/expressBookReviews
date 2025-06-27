@@ -90,11 +90,24 @@ public_users.get('/title/:title', (req, res) => {
 
 
 // Get book reviews by ISBN
+// public_users.get('/review/:isbn', (req, res) => {
+//   const book = books[req.params.isbn];
+//   if (book) return res.status(200).json(book.reviews || {});
+//   return res.status(404).json({ message: "Book not found for the given ISBN." });
+// });
 public_users.get('/review/:isbn', (req, res) => {
-  const book = books[req.params.isbn];
-  if (book) return res.status(200).json(book.reviews || {});
-  return res.status(404).json({ message: "Book not found for the given ISBN." });
+  const isbn = Number(req.params.isbn); // ✅ convert to number
+  console.log("Review request for ISBN:", isbn);
+  console.log("Available ISBNs:", Object.keys(books));
+
+  const book = books[isbn];
+  if (book) {
+    return res.status(200).json(book.reviews || {});
+  } else {
+    return res.status(404).json({ message: "Book not found for the given ISBN." });
+  }
 });
+
 
 public_users.get('/internal/books', (req, res) => {
   return res.status(200).json(books);

@@ -30,7 +30,7 @@ regd_users.post("/login", (req, res) => {
 });
 
 // Add/update a review
-regd_users.put("/auth/review/:isbn", (req, res) => {
+regd_users.post("/auth/review/:isbn", (req, res) => {
   const { isbn } = req.params, { review } = req.body;
   if (!review) {
     return res.status(400).json({ message: "Review text is required." });
